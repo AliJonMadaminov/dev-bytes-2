@@ -74,7 +74,7 @@ class DevByteViewModel(application: Application) : AndroidViewModel(application)
      */
     private fun refreshDataFromNetwork() = viewModelScope.launch {
         try {
-            val playlist = Network.devbytes.getPlaylist().await()
+            val playlist = Network.devbytes.getPlaylist()
             _playlist.postValue(playlist.asDomainModel())
         } catch (networkError: IOException) {
             // Show an infinite loading spinner if the request fails
@@ -89,7 +89,7 @@ class DevByteViewModel(application: Application) : AndroidViewModel(application)
      * Factory for constructing DevByteViewModel with parameter
      */
     class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(DevByteViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return DevByteViewModel(app) as T
